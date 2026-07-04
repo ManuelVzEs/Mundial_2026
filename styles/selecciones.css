@@ -7,25 +7,63 @@ body {
     background-color: #f4f6f9;
     color: #2d2d2d;
     margin: 0;
-    padding: 40px 20px;
     line-height: 1.6;
 }
 
-.container {
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-h1 {
+/* ---------- HERO ---------- */
+.hero {
+    background: linear-gradient(135deg, #10123f 0%, #1a1a6e 55%, #0066cc 100%);
+    color: #fff;
+    padding: 70px 20px 60px;
     text-align: center;
-    color: #1a1a6e;
-    font-size: 2.5rem;
-    font-weight: 800;
-    margin-bottom: 40px;
-    letter-spacing: -0.5px;
 }
 
-h2 {
+.hero-eyebrow {
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 18px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 0 0 10px;
+    letter-spacing: -1px;
+}
+
+.hero-subtitle {
+    font-size: 1.15rem;
+    color: #dbe4ff;
+    margin: 0 0 24px;
+}
+
+.hero-checks {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    flex-wrap: wrap;
+    font-weight: 600;
+}
+
+.hero-checks li {
+    color: #7CFC9B;
+}
+
+/* ---------- CONTAINER / INTRO ---------- */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+}
+
+.intro h2 {
     color: #0066cc;
     font-size: 1.6rem;
     font-weight: 700;
@@ -35,44 +73,275 @@ h2 {
     padding-bottom: 6px;
 }
 
-p {
+.intro p {
     font-size: 1.05rem;
     color: #444;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     max-width: 75ch;
 }
 
-ul {
-    background-color: #ffffff;
+/* ---------- FILTERS ---------- */
+.filters {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 28px 0;
+}
+
+.filters input,
+.filters select {
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid #d9dee6;
+    font-size: 1rem;
+    background: #fff;
+}
+
+.filters input {
+    flex: 1;
+    min-width: 220px;
+}
+
+.filters input:focus,
+.filters select:focus {
+    outline: 2px solid #0066cc;
+    outline-offset: 1px;
+}
+
+/* ---------- TEAMS GRID ---------- */
+.teams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.team-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid transparent;
+}
+
+.team-card:hover,
+.team-card:focus-visible {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0, 102, 204, 0.18);
+    border-color: #0066cc;
+    outline: none;
+}
+
+.team-card .flag {
+    font-size: 2.4rem;
+    line-height: 1;
+}
+
+.team-card .team-name {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #1a1a6e;
+}
+
+.team-card .team-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.team-card .badge {
+    background: #eaf2ff;
+    color: #0066cc;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.75rem;
+}
+
+.team-card .cta {
+    margin-top: 4px;
+    align-self: flex-start;
+    background: #4CAF50;
+    color: #fff;
     border: none;
-    border-radius: 12px;
-    padding: 20px 30px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    list-style: none;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.85rem;
 }
 
-li {
-    margin: 0;
-    padding: 12px 8px;
-    font-size: 1.05rem;
-    border-bottom: 1px solid #eee;
-    transition: background-color 0.2s ease, padding-left 0.2s ease;
+.no-results {
+    color: #777;
+    font-style: italic;
+    padding: 20px 0;
+}
+
+/* ---------- MODAL ---------- */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 12, 30, 0.6);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-box {
+    background: #fff;
+    border-radius: 18px;
+    max-width: 560px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 30px;
     position: relative;
-    padding-left: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 }
 
-li:last-child {
-    border-bottom: none;
-}
-
-li::before {
-    content: "⚽";
+.modal-close {
     position: absolute;
-    left: 0;
+    top: 14px;
+    right: 16px;
+    background: #f0f2f5;
+    border: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    cursor: pointer;
+    color: #444;
 }
 
-li:hover {
-    background-color: #f0f6ff;
-    padding-left: 30px;
-    border-radius: 6px;
+.modal-close:hover {
+    background: #e2e6ec;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.modal-flag {
+    font-size: 3rem;
+}
+
+.modal-header h3 {
+    margin: 0 0 4px;
+    color: #1a1a6e;
+    font-size: 1.5rem;
+}
+
+.badge {
+    background: #eaf2ff;
+    color: #0066cc;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.75rem;
+}
+
+.modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    background: #f7f9fc;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.modal-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.modal-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #888;
+}
+
+.modal-value {
+    font-weight: 700;
+    color: #1a1a6e;
+    font-size: 0.95rem;
+}
+
+.modal-section h4,
+.modal-pros-cons h4 {
+    margin: 0 0 6px;
+    color: #0066cc;
+    font-size: 1rem;
+}
+
+.modal-section p {
+    margin: 0 0 18px;
+    color: #444;
+}
+
+.modal-pros-cons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.modal-pros-cons ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.modal-pros-cons li {
+    font-size: 0.9rem;
+    padding: 4px 0;
+    color: #333;
+}
+
+.pros li::before {
+    content: "✔ ";
+    color: #2e9e44;
+}
+
+.cons li::before {
+    content: "✖ ";
+    color: #d64545;
+}
+
+.map-btn {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    background: #0066cc;
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 999px;
+    font-weight: 700;
+}
+
+.map-btn:hover {
+    background: #004f9e;
+}
+
+@media (max-width: 480px) {
+    .hero h1 { font-size: 2.1rem; }
+    .modal-grid,
+    .modal-pros-cons { grid-template-columns: 1fr; }
 }

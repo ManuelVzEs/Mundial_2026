@@ -1,26 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selecciones</title>
-    <link rel="stylesheet" href="styles/selecciones.css">
-</head>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selecciones | Mundial 2026</title>
 <link rel="stylesheet" href="styles/selecciones.css">
-
+</head>
 <body>
-    <h1>Selecciones</h1>
-    <h2>Selecciones nacionales de fútbol</h2>
-    <p>Las selecciones nacionales de fútbol son los equipos representativos de cada país en competiciones internacionales. Estas selecciones están compuestas por jugadores seleccionados por sus respectivas federaciones nacionales.</p>
-    <p>Algunas de las selecciones nacionales más destacadas incluyen:</p>
-    <ul>
-        <li>Brasil</li>
-        <li>Alemania</li>
-        <li>Argentina</li>
-        <li>Francia</li>
-        <li>Italia</li>
-        <li>España</li>
-    </ul>
+
+  <header class="hero">
+    <div class="hero-content">
+      <span class="hero-eyebrow">⚽ Copa Mundial de la FIFA 2026™</span>
+      <h1>Selecciones</h1>
+      <p class="hero-subtitle">Las 48 selecciones que compiten en México, Estados Unidos y Canadá</p>
+      <ul class="hero-checks">
+        <li>✔ 48 selecciones clasificadas</li>
+        <li>✔ 12 grupos de 4 equipos</li>
+        <li>✔ 3 países sede</li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="intro">
+      <h2>Selecciones nacionales de fútbol</h2>
+      <p>Las selecciones nacionales de fútbol son los equipos representativos de cada país en competiciones internacionales. Estas selecciones están compuestas por jugadores seleccionados por sus respectivas federaciones nacionales.</p>
+      <p>Haz clic en cualquier selección para ver su ficha completa: ranking, historia, entrenador, grupo y el estadio donde juega.</p>
+    </section>
+
+    <section class="filters">
+      <input type="text" id="searchInput" placeholder="Buscar selección..." aria-label="Buscar selección">
+      <select id="groupFilter" aria-label="Filtrar por grupo">
+        <option value="all">Todos los grupos</option>
+      </select>
+    </section>
+
+    <section id="teamsGrid" class="teams-grid"></section>
+
+  </main>
+
+  <!-- Modal -->
+  <div id="teamModal" class="modal-overlay">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTeamName">
+      <button class="modal-close" id="modalClose" aria-label="Cerrar">&times;</button>
+      <div class="modal-header">
+        <span id="modalFlag" class="modal-flag"></span>
+        <div>
+          <h3 id="modalTeamName"></h3>
+          <span id="modalGroupBadge" class="badge"></span>
+        </div>
+      </div>
+
+      <div class="modal-grid">
+        <div class="modal-item">
+          <span class="modal-label">Ranking FIFA</span>
+          <span id="modalRanking" class="modal-value"></span>
+        </div>
+        <div class="modal-item">
+          <span class="modal-label">Entrenador</span>
+          <span id="modalCoach" class="modal-value"></span>
+        </div>
+        <div class="modal-item">
+          <span class="modal-label">Grupo</span>
+          <span id="modalGroup" class="modal-value"></span>
+        </div>
+        <div class="modal-item">
+          <span class="modal-label">Estadio</span>
+          <span id="modalStadium" class="modal-value"></span>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h4>Historia</h4>
+        <p id="modalHistory"></p>
+      </div>
+
+      <div class="modal-pros-cons">
+        <div class="pros">
+          <h4>Ventajas</h4>
+          <ul id="modalPros"></ul>
+        </div>
+        <div class="cons">
+          <h4>Desventajas</h4>
+          <ul id="modalCons"></ul>
+        </div>
+      </div>
+
+      <a id="modalMapLink" href="#" target="_blank" rel="noopener" class="map-btn">
+        📍 Ver estadio en Google Maps
+      </a>
+    </div>
+  </div>
+
+  <script src="js/selecciones.js"></script>
 </body>
 </html>
