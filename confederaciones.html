@@ -76,139 +76,162 @@
         </div>
     </div>
 </div>
-
 <script>
 /* ==============================================================
-   DATOS: Confederaciones y selecciones clasificadas al Mundial 2026
-   (nombres, banderas y grupos son reales; ranking/historia/ventajas/
-   desventajas/entrenador/estadio son datos de ejemplo para el diseño)
+   CONSUMO DE API: Datos reales desde la Base de Datos MySQL
    ============================================================== */
 
-function equipo(nombre, bandera, grupo, estadio, ciudadMapa) {
-    return {
-        nombre: nombre,
-        bandera: bandera,
-        grupo: grupo,
-        ranking: "Por definir (FIFA, junio 2026)",
-        historia: "Selección participante en la fase final del Mundial 2026. Su historial detallado se conectará desde la base de datos.",
-        ventajas: "Plantilla competitiva y buen momento en la fase de clasificación.",
-        desventajas: "Grupo exigente con rivales de alto nivel.",
-        entrenador: "Por confirmar",
-        estadio: estadio,
-        mapa: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(ciudadMapa)
-    };
-}
+const API_URL = "http://localhost:3000/api/selecciones";
 
-const confederaciones = {
-    CONCACAF: {
-        nombreCorto: "CONCACAF",
-        nombreCompleto: "Fútbol de América del Norte, Centroamérica y el Caribe",
-        paises: [
-            equipo("México", "🇲🇽", "A", "Estadio Ciudad de México", "Estadio Ciudad de México, Mexico"),
-            equipo("Canadá", "🇨🇦", "B", "BC Place, Vancouver", "BC Place Vancouver"),
-            equipo("Estados Unidos", "🇺🇸", "D", "Estadio de Seattle", "Lumen Field Seattle"),
-            equipo("Panamá", "🇵🇦", "L", "Estadio de Atlanta", "Mercedes-Benz Stadium Atlanta"),
-            equipo("Haití", "🇭🇹", "C", "Estadio de Boston", "Gillette Stadium Boston"),
-            equipo("Curazao", "🇨🇼", "E", "Estadio de Houston", "NRG Stadium Houston")
-        ]
-    },
-    CONMEBOL: {
-        nombreCorto: "CONMEBOL",
-        nombreCompleto: "Confederación Sudamericana de Fútbol",
-        paises: [
-            equipo("Argentina", "🇦🇷", "J", "Estadio de Dallas", "AT&T Stadium Dallas"),
-            equipo("Brasil", "🇧🇷", "C", "Estadio Nueva York / Nueva Jersey", "MetLife Stadium New Jersey"),
-            equipo("Colombia", "🇨🇴", "K", "Estadio de Kansas City", "Arrowhead Stadium Kansas City"),
-            equipo("Ecuador", "🇪🇨", "E", "Estadio de Filadelfia", "Lincoln Financial Field Philadelphia"),
-            equipo("Paraguay", "🇵🇾", "D", "Estadio Bahía de San Francisco", "Levi's Stadium San Francisco"),
-            equipo("Uruguay", "🇺🇾", "H", "Estadio de Miami", "Hard Rock Stadium Miami")
-        ]
-    },
-    UEFA: {
-        nombreCorto: "UEFA",
-        nombreCompleto: "Unión de Asociaciones Europeas de Fútbol",
-        paises: [
-            equipo("Chequia", "🇨🇿", "A", "Estadio de Atlanta", "Mercedes-Benz Stadium Atlanta"),
-            equipo("Suiza", "🇨🇭", "B", "Estadio de Los Ángeles", "SoFi Stadium Los Angeles"),
-            equipo("Bosnia y Herzegovina", "🇧🇦", "B", "Estadio de Seattle", "Lumen Field Seattle"),
-            equipo("Escocia", "🏴", "C", "Estadio de Boston", "Gillette Stadium Boston"),
-            equipo("Turquía", "🇹🇷", "D", "Estadio Bahía de San Francisco", "Levi's Stadium San Francisco"),
-            equipo("Alemania", "🇩🇪", "E", "Estadio de Houston", "NRG Stadium Houston"),
-            equipo("Países Bajos", "🇳🇱", "F", "Estadio de Toronto", "BMO Field Toronto"),
-            equipo("Suecia", "🇸🇪", "F", "Estadio de Dallas", "AT&T Stadium Dallas"),
-            equipo("Bélgica", "🇧🇪", "G", "Estadio de Miami", "Hard Rock Stadium Miami"),
-            equipo("España", "🇪🇸", "H", "Estadio de Miami", "Hard Rock Stadium Miami"),
-            equipo("Francia", "🇫🇷", "I", "Estadio Nueva York / Nueva Jersey", "MetLife Stadium New Jersey"),
-            equipo("Noruega", "🇳🇴", "I", "Estadio de Filadelfia", "Lincoln Financial Field Philadelphia"),
-            equipo("Austria", "🇦🇹", "J", "Estadio de Kansas City", "Arrowhead Stadium Kansas City"),
-            equipo("Portugal", "🇵🇹", "K", "Estadio de Dallas", "AT&T Stadium Dallas"),
-            equipo("Inglaterra", "🏴", "L", "Estadio de Atlanta", "Mercedes-Benz Stadium Atlanta"),
-            equipo("Croacia", "🇭🇷", "L", "Estadio de Houston", "NRG Stadium Houston")
-        ]
-    },
-    CAF: {
-        nombreCorto: "CAF",
-        nombreCompleto: "Confederación Africana de Fútbol",
-        paises: [
-            equipo("Marruecos", "🇲🇦", "C", "Estadio Nueva York / Nueva Jersey", "MetLife Stadium New Jersey"),
-            equipo("Costa de Marfil", "🇨🇮", "E", "Estadio de Filadelfia", "Lincoln Financial Field Philadelphia"),
-            equipo("Túnez", "🇹🇳", "F", "Estadio de Toronto", "BMO Field Toronto"),
-            equipo("Egipto", "🇪🇬", "G", "Estadio de Miami", "Hard Rock Stadium Miami"),
-            equipo("Senegal", "🇸🇳", "I", "Estadio de Filadelfia", "Lincoln Financial Field Philadelphia"),
-            equipo("Argelia", "🇩🇿", "J", "Estadio de Kansas City", "Arrowhead Stadium Kansas City"),
-            equipo("Ghana", "🇬🇭", "L", "Estadio de Atlanta", "Mercedes-Benz Stadium Atlanta"),
-            equipo("Cabo Verde", "🇨🇻", "H", "Estadio de Miami", "Hard Rock Stadium Miami"),
-            equipo("Sudáfrica", "🇿🇦", "A", "Estadio de Atlanta", "Mercedes-Benz Stadium Atlanta"),
-            equipo("RD Congo", "🇨🇩", "K", "Estadio de Kansas City", "Arrowhead Stadium Kansas City")
-        ]
-    },
-    AFC: {
-        nombreCorto: "AFC",
-        nombreCompleto: "Confederación Asiática de Fútbol",
-        paises: [
-            equipo("Corea del Sur", "🇰🇷", "A", "Estadio de Guadalajara", "Estadio Akron Guadalajara"),
-            equipo("Catar", "🇶🇦", "B", "BC Place, Vancouver", "BC Place Vancouver"),
-            equipo("Japón", "🇯🇵", "F", "Estadio de Toronto", "BMO Field Toronto"),
-            equipo("Irán", "🇮🇷", "G", "Estadio de Miami", "Hard Rock Stadium Miami"),
-            equipo("Arabia Saudita", "🇸🇦", "H", "Estadio de Miami", "Hard Rock Stadium Miami"),
-            equipo("Jordania", "🇯🇴", "J", "Estadio de Kansas City", "Arrowhead Stadium Kansas City"),
-            equipo("Uzbekistán", "🇺🇿", "K", "Estadio de Dallas", "AT&T Stadium Dallas"),
-            equipo("Australia", "🇦🇺", "D", "Estadio de Seattle", "Lumen Field Seattle"),
-            equipo("Iraq", "🇮🇶", "I", "Estadio Nueva York / Nueva Jersey", "MetLife Stadium New Jersey")
-        ]
-    },
-    OFC: {
-        nombreCorto: "OFC",
-        nombreCompleto: "Confederación de Fútbol de Oceanía",
-        paises: [
-            equipo("Nueva Zelanda", "🇳🇿", "G", "Estadio de Miami", "Hard Rock Stadium Miami")
-        ]
-    }
-};
-
-/* ==============================================================
-   RENDER: menú de confederaciones
-   ============================================================== */
+// Elementos del DOM
 const menuConfederaciones = document.getElementById("menu-confederaciones");
 const seccionPaises = document.getElementById("seccion-paises");
 const gridPaises = document.getElementById("grid-paises");
 const tituloConfederacion = document.getElementById("titulo-confederacion");
+const overlay = document.getElementById("overlay");
 
-Object.keys(confederaciones).forEach(function (clave) {
-    const conf = confederaciones[clave];
-    const btn = document.createElement("button");
-    btn.className = "confederacion-btn";
-    btn.innerHTML = conf.nombreCorto + "<small>" + conf.nombreCompleto + " · " + conf.paises.length + " equipos</small>";
-    btn.addEventListener("click", function () {
-        document.querySelectorAll(".confederacion-btn").forEach(b => b.classList.remove("activo"));
-        btn.classList.add("activo");
-        mostrarPaises(clave);
+
+let listaConfederaciones = {};
+
+document.addEventListener("DOMContentLoaded", cargarDatosDeAPI);
+
+async function cargarDatosDeAPI() {
+    try {
+        const respuesta = await fetch(API_URL);
+        const seleccionesBD = await respuesta.json();
+        listaConfederaciones = agruparPorConfederacion(seleccionesBD);
+        renderizarMenu();
+    } catch (error) {
+        console.error("Error al conectar con la API:", error);
+        menuConfederaciones.innerHTML = "<p class='error'>No se pudieron cargar los datos del Mundial.</p>";
+    }
+}
+
+// Función auxiliar para agrupar las selecciones por sus siglas (CONCACAF, CONMEBOL, etc.)
+function agruparPorConfederacion(selecciones) {
+    const estructura = {};
+    
+    // 1. Diccionario de banderas 
+    const banderasEmoji = {
+        "México": "🇲🇽", "Canadá": "🇨🇦", "Estados Unidos": "🇺🇸", "Panamá": "🇵🇦", "Haití": "🇭🇹", "Curazao": "🇨🇼",
+        "Argentina": "🇦🇷", "Brasil": "🇧🇷", "Colombia": "🇨🇴", "Ecuador": "🇪🇨", "Paraguay": "🇵🇾", "Uruguay": "🇺🇾",
+        "República Checa": "🇨🇿", "Chequia": "🇨🇿", "Suiza": "🇨🇭", "Bosnia y Herzegovina": "🇧🇦", "Escocia": "🏴󠁧󠁢󠁳󠁣󠁴󠁿", 
+        "Turquía": "🇹🇷", "Alemania": "🇩🇪", "Países Bajos": "🇳🇱", "Suecia": "🇸🇪", "Bélgica": "🇧🇪", "España": "🇪🇸", 
+        "Francia": "🇫🇷", "Noruega": "🇳🇴", "Austria": "🇦🇹", "Portugal": "🇵🇹", "Inglaterra": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "Croacia": "🇭🇷",
+        "Marruecos": "🇲🇦", "Costa de Marfil": "🇨🇮", "Túnez": "🇹🇳", "Egipto": "🇪🇬", "Senegal": "🇸🇳", "Argelia": "🇩🇿", 
+        "Ghana": "🇬🇭", "Cabo Verde": "🇨🇻", "Sudáfrica": "🇿🇦", "República Democrática del Congo": "🇨🇩",
+        "Corea del Sur": "🇰🇷", "Qatar": "🇶🇦", "Japón": "🇯🇵", "Irán": "🇮🇷", "Arabia Saudita": "🇸🇦", "Jordania": "🇯🇴", 
+        "Uzbekistán": "🇺🇿", "Australia": "🇦🇺", "Irak": "🇮🇶", "Nueva Zelanda": "🇳🇿"
+    };
+
+    // 2. Diccionario de sedes 
+    const sedesEstadios = {
+        "México": { nombre: "Estadio Ciudad de México", query: "Estadio Ciudad de México, Mexico" },
+        "Canadá": { nombre: "BC Place, Vancouver", query: "BC Place Vancouver" },
+        "Estados Unidos": { nombre: "Estadio de Seattle", query: "Lumen Field Seattle" },
+        "Panamá": { nombre: "Estadio de Atlanta", query: "Mercedes-Benz Stadium Atlanta" },
+        "Haití": { nombre: "Estadio de Boston", query: "Gillette Stadium Boston" },
+        "Curazao": { nombre: "Estadio de Houston", query: "NRG Stadium Houston" },
+        "Argentina": { nombre: "Estadio de Dallas", query: "AT&T Stadium Dallas" },
+        "Brasil": { nombre: "Estadio Nueva York / Nueva Jersey", query: "MetLife Stadium New Jersey" },
+        "Colombia": { nombre: "Estadio de Kansas City", query: "Arrowhead Stadium Kansas City" },
+        "Ecuador": { nombre: "Estadio de Filadelfia", query: "Lincoln Financial Field Philadelphia" },
+        "Paraguay": { nombre: "Estadio Bahía de San Francisco", query: "Levi's Stadium San Francisco" },
+        "Uruguay": { nombre: "Estadio de Miami", query: "Hard Rock Stadium Miami" },
+        "República Checa": { nombre: "Estadio de Atlanta", query: "Mercedes-Benz Stadium Atlanta" },
+        "Chequia": { nombre: "Estadio de Atlanta", query: "Mercedes-Benz Stadium Atlanta" },
+        "Suiza": { nombre: "Estadio de Los Ángeles", query: "SoFi Stadium Los Angeles" },
+        "Bosnia y Herzegovina": { nombre: "Estadio de Seattle", query: "Lumen Field Seattle" },
+        "Escocia": { nombre: "Estadio de Boston", query: "Gillette Stadium Boston" },
+        "Turquía": { nombre: "Estadio Bahía de San Francisco", query: "Levi's Stadium San Francisco" },
+        "Alemania": { nombre: "Estadio de Houston", query: "NRG Stadium Houston" },
+        "Países Bajos": { nombre: "Estadio de Toronto", query: "BMO Field Toronto" },
+        "Suecia": { nombre: "Estadio de Dallas", query: "AT&T Stadium Dallas" },
+        "Bélgica": { nombre: "Estadio de Miami", query: "Hard Rock Stadium Miami" },
+        "España": { nombre: "Estadio de Miami", query: "Hard Rock Stadium Miami" },
+        "Francia": { nombre: "Estadio Nueva York / Nueva Jersey", query: "MetLife Stadium New Jersey" },
+        "Noruega": { nombre: "Estadio de Filadelfia", query: "Lincoln Financial Field Philadelphia" },
+        "Austria": { nombre: "Estadio de Kansas City", query: "Arrowhead Stadium Kansas City" },
+        "Portugal": { nombre: "Estadio de Dallas", query: "AT&T Stadium Dallas" },
+        "Inglaterra": { nombre: "Estadio de Atlanta", query: "Mercedes-Benz Stadium Atlanta" },
+        "Croacia": { nombre: "Estadio de Houston", query: "NRG Stadium Houston" },
+        "Marruecos": { nombre: "Estadio Nueva York / Nueva Jersey", query: "MetLife Stadium New Jersey" },
+        "Costa de Marfil": { nombre: "Estadio de Filadelfia", query: "Lincoln Financial Field Philadelphia" },
+        "Túnez": { nombre: "Estadio de Toronto", query: "BMO Field Toronto" },
+        "Egipto": { nombre: "Estadio de Miami", query: "Hard Rock Stadium Miami" },
+        "Senegal": { nombre: "Estadio de Filadelfia", query: "Lincoln Financial Field Philadelphia" },
+        "Argelia": { nombre: "Estadio de Kansas City", query: "Arrowhead Stadium Kansas City" },
+        "Ghana": { nombre: "Estadio de Atlanta", query: "Mercedes-Benz Stadium Atlanta" },
+        "Cabo Verde": { nombre: "Estadio de Miami", query: "Hard Rock Stadium Miami" },
+        "Sudáfrica": { nombre: "Estadio de Atlanta", query: "Mercedes-Benz Stadium Atlanta" },
+        "RD Congo": { nombre: "Estadio de Kansas City", query: "Arrowhead Stadium Kansas City" },
+        "Corea del Sur": { nombre: "Estadio de Guadalajara", query: "Estadio Akron Guadalajara" },
+        "Catar": { nombre: "BC Place, Vancouver", query: "BC Place Vancouver" },
+        "Japón": { nombre: "Estadio de Toronto", query: "BMO Field Toronto" },
+        "Irán": { nombre: "Estadio de Miami", query: "Hard Rock Stadium Miami" },
+        "Arabia Saudita": { nombre: "Estadio de Miami", query: "Hard Rock Stadium Miami" },
+        "Jordania": { nombre: "Estadio de Kansas City", query: "Arrowhead Stadium Kansas City" },
+        "Uzbekistán": { nombre: "Estadio de Dallas", query: "AT&T Stadium Dallas" },
+        "Australia": { nombre: "Estadio de Seattle", query: "Lumen Field Seattle" },
+        "Iraq": { nombre: "Estadio Nueva York / Nueva Jersey", query: "MetLife Stadium New Jersey" },
+        "Nueva Zelanda": { nombre: "Estadio de Miami", query: "Hard Rock Stadium Miami" }
+    };
+
+    selecciones.forEach(pais => {
+        const siglas = pais.siglas_confederacion || "OTRA";
+        
+        if (!estructura[siglas]) {
+            estructura[siglas] = {
+                nombreCorto: siglas,
+                nombreCompleto: pais.nombre_continente || "Otras Regiones", 
+                paises: []
+            };
+        }
+        
+        const nombreReal = pais.nombre_seleccion;
+        const emojiBandera = banderasEmoji[nombreReal] || "🏳️";
+        const sedeAsignada = sedesEstadios[nombreReal] || { nombre: "Estadio por asignar", query: nombreReal };
+        
+        estructura[siglas].paises.push({
+            nombre: nombreReal,
+            bandera: emojiBandera, 
+            grupo: pais.nombre_grupo || "Por definir", 
+            ranking: pais.ranking || "Sin ranking",
+            historia: pais.historia || "Sin historia registrada.",
+            ventajas: pais.ventajas || "Ninguna.",
+            desventajas: pais.desventajas || "Ninguna.",
+            entrenador: pais.entrenador || "Por confirmar",
+            estadio: sedeAsignada.nombre,
+            mapa: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(sedeAsignada.query)
+        });
     });
-    menuConfederaciones.appendChild(btn);
-});
+    
+    return estructura;
+}
+
+
+/* ==============================================================
+   RENDERIZADO DE COMPONENTES
+   ============================================================== */
+function renderizarMenu() {
+    menuConfederaciones.innerHTML = ""; // Limpiar cargando
+    
+    Object.keys(listaConfederaciones).forEach(function (clave) {
+        const conf = listaConfederaciones[clave];
+        const btn = document.createElement("button");
+        btn.className = "confederacion-btn";
+        btn.innerHTML = conf.nombreCorto + "<small>" + conf.nombreCompleto + " · " + conf.paises.length + " equipos</small>";
+        btn.addEventListener("click", function () {
+            document.querySelectorAll(".confederacion-btn").forEach(b => b.classList.remove("activo"));
+            btn.classList.add("activo");
+            mostrarPaises(clave);
+        });
+        menuConfederaciones.appendChild(btn);
+    });
+}
 
 function mostrarPaises(clave) {
-    const conf = confederaciones[clave];
+    const conf = listaConfederaciones[clave];
     tituloConfederacion.textContent = conf.nombreCorto + " - " + conf.nombreCompleto;
     gridPaises.innerHTML = "";
 
@@ -237,8 +260,6 @@ document.getElementById("btn-volver").addEventListener("click", function () {
 /* ==============================================================
    MODAL / CUADRO EMERGENTE
    ============================================================== */
-const overlay = document.getElementById("overlay");
-
 function abrirModal(pais) {
     document.getElementById("modal-bandera").textContent = pais.bandera;
     document.getElementById("modal-nombre").textContent = pais.nombre;
@@ -265,6 +286,5 @@ document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") cerrarModal();
 });
 </script>
-
 </body>
 </html>
